@@ -20,7 +20,8 @@ def generate_response(prompt: str, temperature_condition=float, top_p_condition=
             stream=True
         )
     except BadRequestError as e:
-        response = "入力情報が長すぎます！　「リセット」をクリックして会話をリセットしてください。"
+        response = """入力情報が多すぎます！　ページを更新してください。\n
+        (頻繁にこのエラーが発生する場合は、プランをグレードアップして許容トークン数を増やすことをおすすめします。)"""
     
     with st.chat_message("assistant"):
         bot_response_area = st.empty()

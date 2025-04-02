@@ -1,0 +1,7 @@
+.right-aligned {
+    text-align: right;
+}
+.thick-line {
+    border-top: 5px solid #bbb;
+    margin: 20px 0;
+}

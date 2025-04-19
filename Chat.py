@@ -6,7 +6,7 @@ from services.components import generate_response, store_response, show_conversa
 #---------------------------------------------------------------------------------
 
 st.set_page_config(
-    page_title = "アイデア壁打ちチャット Trial ver2.0 by Mogi",
+    page_title = "アイデア壁打ちチャット Trial ver2.0",
     page_icon = "💡",
     layout = "wide",
     initial_sidebar_state = "expanded"
@@ -41,7 +41,7 @@ top_p_b = 1.0
 # メイン画面
 #---------------------------------------------------------------------------------
 
-st.title("アイデア壁打ち用アプリ ver.1.0")
+st.title("アイデア壁打ちチャット Trial ver2.0")
 st.markdown("アイデアの壁打ちを行うAIチャットの試作品です。")
 
 user_input = st.chat_input("メッセージを入力してください", key="chat_input")

@@ -52,11 +52,11 @@ if user_input:
     
     # Bot Aからの回答を生成
     response_a = generate_response(prompt = user_input, temperature_condition=temperature_a, top_p_condition=top_p_a)
-    store_response("1号()", response_a)
+    store_response("1号", response_a)
     
     # Bot Bからの回答を生成
     response_b = generate_response(prompt = user_input, temperature_condition=temperature_a, top_p_condition=top_p_a)
-    store_response("2号()", response_b)
+    store_response("2号", response_b)
     
 
 print_debug()

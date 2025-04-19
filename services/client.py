@@ -1,40 +1,22 @@
-from openai import OpenAI, BadRequestError
+from openai import OpenAI
 import streamlit as st
 
 openai_api_key = st.secrets["OPENAI"]["API_KEY"]
 client = OpenAI(api_key = openai_api_key)
 model = "gpt-4o-mini"
 
-def generate_response(prompt: str, temperature_condition=float, top_p_condition=float):
-    st.session_state['messages'].append({"role": "user", "content": prompt})
-    response = None
-    while len(st.session_state['messages']) > 7:
-        st.session_state['messages'].pop(1)
+# リクエストを送って回答responseを返す関数
+def request_to_openai(temperature_condition=float, top_p_condition=float):
     try:
         response=client.chat.completions.create(
-            model=model,
-            temperature=temperature_condition,
-            top_p=top_p_condition,
-            messages=st.session_state['messages'],
-            max_tokens=600,
-            stream=True
-        )
-    except BadRequestError as e:
-        response = """入力情報が多すぎます！　ページを更新してください。\n
-        (頻繁にこのエラーが発生する場合は、プランをグレードアップして許容トークン数を増やすことをおすすめします。)"""
-    
-    with st.chat_message("assistant"):
-        bot_response_area = st.empty()
-        if response is None:
-            bot_response_area.write(response)
-        else:
-            bot_message = ""
-            for chunk in response:
-                if chunk.choices:
-                    if chunk.choices[0].finish_reason is not None:
-                        break
-                    bot_message += chunk.choices[0].delta.content
-                bot_response_area.write(bot_message)
-    
-    st.session_state['messages'].append({"role": "assistant", "content": bot_message})
-    st.session_state['conversations'].append({"role": "assistant", "content": bot_message})
+                model=model,
+                temperature=temperature_condition,
+                top_p=top_p_condition,
+                messages=st.session_state['messages'],
+                max_tokens=600,
+                stream=True
+            )
+        return response
+    except Exception as e:
+        raise RuntimeError("""ランタイムエラーです。もう一度お試しください。\n
+        (頻繁にこのエラーが発生する場合は管理者に連絡するか、プランをグレードアップして許容トークン数を増やすことをおすすめします。)""")
